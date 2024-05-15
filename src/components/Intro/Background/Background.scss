@@ -1,0 +1,53 @@
+$star-color: #fff; // Color of the star
+$star-size: 10px; // Size of the star
+
+.bg {
+  position: fixed;
+  z-index: -1;
+  background-color: #000439;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  overflow: hidden;
+
+  .circles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    border-radius: 100%;
+  }
+
+  .logo-container {
+    position: fixed;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
+    .logo {
+      opacity: .05;
+      background-image: url('../../../../public/logo512.png');
+      width: 250px;
+      height: 250px;
+      background-size: contain;
+    }
+  }
+}

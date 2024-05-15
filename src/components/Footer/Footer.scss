@@ -1,0 +1,29 @@
+.footer {
+  user-select: none;
+  position: fixed;
+  margin-bottom: 15px;
+  z-index: 5;
+  color: #FFFFFF;
+  width: 100%;
+  text-align: center;
+  bottom: 10px;
+  font-size: 15px;
+  padding: 0 2vw;
+  box-sizing: border-box;
+  opacity: .5;
+  transition: opacity .1s ease-in-out;
+
+  .template-credit {
+    font-size: 11px;
+  }
+
+  @media (max-width: 768px) {
+      font-size: 16px;
+  }
+
+  &-side {
+    text-align: right;
+    display: block;
+    bottom: auto;
+  }
+}

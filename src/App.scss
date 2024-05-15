@@ -1,0 +1,50 @@
+body, .App {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  text-transform: none !important;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  padding: 0;
+  margin: 0;
+  color: #FFFFFF;
+}
+
+a {
+  color: inherit;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes animate {
+
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100vh) rotate(720deg);
+    opacity: 0;
+  }
+
+}
