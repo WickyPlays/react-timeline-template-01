@@ -44,6 +44,7 @@ export const TIMELINES = {
         Just another fun holiday alone in my home.
         [CONTEXT]
         I'm just at home for holiday because all my friends went out to their friends... sad...
+        [REFERENCES]
         [PRIORITY]
         Highest
         `
