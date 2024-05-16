@@ -10,7 +10,7 @@ Hello, Wicky here! Welcome to my Timeline template app #01, made with ReactJS, f
 + A non-coder friendly format to easily add timeline without coding or JSON (maybe a bit of it, but it's easy to understand). Just use a few tags and done
 
 ## Demo
-The demo of the project can be found here http://localhost:3000/react-timeline-template-01
+The demo of the project can be found here https://wickyplays.github.io/react-timeline-template-01
 
 ## How to use
 In this tutorial, we prefer you to use Git to clone the app to yours.
