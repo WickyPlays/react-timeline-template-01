@@ -9,6 +9,8 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { LINK_REGEX, stringHasLink } from './utils/Utils';
 import { TIMELINES } from './Timelines';
 
+const TAGS = ['[TITLE]', '[DESCRIPTION]', '[CONTEXT]', '[REFERENCES]', '[PRIORITY]'];
+
 export const PRIORITY = {
   KEY: {
     title: 'Key event',
@@ -52,8 +54,6 @@ export const PRIORITY = {
   }
 }
 
-
-
 export function parseAllTimelines() {
   const parsedTimelines = [];
 
@@ -72,69 +72,51 @@ export function parseAllTimelines() {
             time: `${year}/${month}/${day}`,
             title: "",
             description: "",
-            context: {
-              content: "",
-              references: []
-            },
+            context: { content: "", references: [] },
             priority: PRIORITY.UNKNOWN
           };
 
           for (let i = 0; i < eventData.length; i++) {
-            if (eventData[i] === "[TITLE]") {
-              parsedEvent.title = eventData[i + 1];
-            } else if (eventData[i] === "[DESCRIPTION]") {
-              parsedEvent.description = eventData[i + 1];
-            } else if (eventData[i] === "[CONTEXT]") {
-              let contextData = eventData.slice(i + 1)
-              let finalData = ""
-
-              for (let j = 0; j < contextData.length; j++) {
-                if (contextData[j] === "[REFERENCES]") {
-                  break;
-                }
-
-                if (contextData[j].length == 0) {
-                  finalData += "<br />"
-                } else {
-                  if (stringHasLink(contextData[j])) {
-                    const replacedText = contextData[j].replace(LINK_REGEX, (match) => {
-                      return `<a href="${match}">${match}</a>`;
-                    });
-                    finalData += `<p>${replacedText}</p>`;
-                  } else {
-                    finalData += `<p>${contextData[j]}</p>`
+            switch (eventData[i]) {
+              case "[TITLE]":
+                parsedEvent.title = eventData[i + 1];
+                i++;
+                break;
+              case "[DESCRIPTION]":
+                parsedEvent.description = eventData[i + 1];
+                i++;
+                break;
+              case "[CONTEXT]": {
+                let finalData = "";
+                for (let j = i + 1; j < eventData.length; j++) {
+                  if (TAGS.includes(eventData[j])) {
+                    i = j - 1;
+                    break;
                   }
-
+                  finalData += eventData[j].length === 0
+                    ? "<br />"
+                    : `<p>${eventData[j].replace(LINK_REGEX, match => `<a href="${match}">${match}</a>`)}</p>`;
                 }
+                parsedEvent.context.content = finalData;
+                break;
               }
-
-              parsedEvent.context.content = finalData
-              console.log(parsedEvent.context.content)
-            } else if (eventData[i] === "[REFERENCES]") {
-              let refData = eventData.slice(i + 1).map(line => line.trim());
-
-              for (let j = 0; j < refData.length; j++) {
-                if (refData[j] === "[PRIORITY]") {
-                  break
+              case "[REFERENCES]": {
+                for (let j = i + 1; j < eventData.length; j++) {
+                  if (TAGS.includes(eventData[j])) {
+                    i = j - 1;
+                    break;
+                  }
+                  const match = eventData[j].match(/\[(.*?)\]\((.*?)\)/);
+                  parsedEvent.context.references.push(match
+                    ? { title: match[1], url: match[2] }
+                    : { title: eventData[j], url: eventData[j] });
                 }
-
-                const regex = /\[(.*?)\]\((.*?)\)/;
-                const match = refData[j].match(regex);
-
-                if (!match) {
-                  parsedEvent.context.references.push({
-                    title: refData[j],
-                    url: refData[j]
-                  });
-                } else {
-                  parsedEvent.context.references.push({
-                    title: match[1],
-                    url: match[2]
-                  })
-                }
+                break;
               }
-            } else if (eventData[i] === "[PRIORITY]") {
-              parsedEvent.priority = PRIORITY[eventData[i + 1].toUpperCase()];
+              case "[PRIORITY]":
+                parsedEvent.priority = PRIORITY[eventData[i + 1].toUpperCase()];
+                i++;
+                break;
             }
           }
 
