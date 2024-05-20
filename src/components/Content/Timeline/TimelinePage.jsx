@@ -40,7 +40,7 @@ const ContextDialog = ({ context, setContext }) => {
         }
       }}
     >
-      <DialogContent className='content'>
+      <DialogContent className='timeline-context-dialog-content'>
         {
           context && (
             <div className='content-container'>
@@ -73,7 +73,7 @@ export default function TimelinePage() {
     <div className="timeline-page">
       <Timeline className='timeline' position="right">
         {
-          parseAllTimelines().map((timeline) => {
+          parseAllTimelines().map((timeline, index) => {
             return (
               <div className='timeline-event-item'>
                 <p className='date'>{formatDate(timeline.time)}<span className='date-mini'>{`(${timeline.time})`}</span></p>
@@ -90,7 +90,7 @@ export default function TimelinePage() {
                               <TimelineConnector className='timeline-connector-restrict' />
                             )
                           }
-                          <TimelineDot sx={{ bgcolor: event.priority.backgroundColor }}>
+                          <TimelineDot className='dot' sx={{ bgcolor: event.priority.backgroundColor }}>
                             {event.priority.icon}
                           </TimelineDot>
                           {
@@ -100,38 +100,40 @@ export default function TimelinePage() {
                           }
                         </TimelineSeparator>
                         <TimelineContent
-                          className={`timeline-item-content`}
+                          className={`content`}
                           style={(index > 0) ? { paddingTop: 55 } : undefined}>
                           <div>
                             <p className='title'>
                               <span className='priority' style={{ backgroundColor: event.priority.backgroundColor }}>
                                 {event.priority.title}
                               </span>
-                              <span>{event.title}</span>
-                              {
-                                event.context.content && (
-                                  <PriorityHighIcon className='btn-info' onClick={() => setContext(event)} />
-                                )
-                              }
+                              <span className='btn-info-container'>
+                                <span>{event.title}</span>
+                                {
+                                  event.context.content && (
+                                    <PriorityHighIcon className='btn-info' onClick={() => setContext(event)} />
+                                  )
+                                }
+                              </span>
                             </p>
                             <div className='content-body'>
                               <div className='description'>{event.description}</div>
                               {
                                 event.context.references.length > 0 && (
                                   <div className='reference-container'>
-                                  <p className='label'>References:</p>
-                                  {
-                                    event.context.references.map((reference, index) => {
-                                      return (
-                                        <div>
-                                          <a className='reference' key={index} href={reference.url} target='_blank' rel='noreferrer'>
-                                            {reference.title}
-                                          </a>
-                                        </div>
-                                      )
-                                    })
-                                  }
-                                </div>
+                                    <p className='label'>References:</p>
+                                    {
+                                      event.context.references.map((reference, index) => {
+                                        return (
+                                          <div>
+                                            <a className='reference' key={index} href={reference.url} target='_blank' rel='noreferrer'>
+                                              {reference.title}
+                                            </a>
+                                          </div>
+                                        )
+                                      })
+                                    }
+                                  </div>
                                 )
                               }
                             </div>

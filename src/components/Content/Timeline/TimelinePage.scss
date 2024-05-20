@@ -1,9 +1,18 @@
 .timeline-page {
+
+  margin: 0 15vw;
+
+  @media (max-width: 768px) {
+    margin: 0 5vw;
+  }
+
+  @media (max-width: 600px) {
+    margin: 0;    
+  }
+
   .timeline {
     justify-content: left;
-    padding: 40px 20vw;
-    max-height: 75vh;
-    overflow-y: auto;
+    padding-bottom: 60px;
 
     .MuiTimelineItem-root::before {
       display: none;
@@ -11,6 +20,7 @@
 
     &-event-item {
       padding-bottom: 30px;
+      position: relative;
 
       .date {
         color: #FFF;
@@ -19,6 +29,7 @@
         font-weight: 600;
         display: flex;
         align-items: center;
+        box-sizing: border-box;
 
         &-mini {
           font-size: 14px;
@@ -29,11 +40,6 @@
     }
 
     &-item {
-
-      &-content {
-        padding-top: 20px;
-      }
-
       .MuiTimelineDot-root {
         width: 30px;
         height: 30px;
@@ -41,6 +47,18 @@
         justify-content: center;
         align-items: center;
         margin-bottom: 0px;
+
+        @media (max-width: 480px) {
+          width: 15px;
+          height: 15px;
+          margin-top: 20px;
+        }
+      }
+
+      .dot > * {
+        @media (max-width: 480px) {
+          font-size: 16px !important;
+        }
       }
 
       .MuiTimelineConnector-root {
@@ -52,34 +70,56 @@
         max-height: 15px;
       }
 
-      .title {
-        margin-bottom: 10px;
-        font-size: 18px;
-        font-weight: 600;
+      .content {
+        padding-top: 20px;
+        width: 100%;
+        min-height: 0px !important;
+        text-wrap: stable;
 
-        .priority {
-          padding: 5px 10px;
+        > div > .title > span {
+          @media (max-width: 480px) { 
+            display: block;
+            margin-bottom: 3px;
+          }
         }
 
-        .btn-info {
-          width: 10px;
-          height: 10px;
-          font-size: 13px;
-          padding: 3px;
-          cursor: pointer;
-          border-radius: 50%;
-          color: #FFFFFF !important;
-          background-color: #000000 !important;
-          border: 1px solid #FFFFFF;
-          margin-left: 10px;
-          margin-top: 5px;
-          position: absolute;
-          z-index: 5;
+        @media (max-width: 480px) {
+          padding-left: 5px;
+        }
 
-          &:hover {
-            color: #000000 !important;
-            background-color: #FFFFFF !important;
+        .title {
+          margin-bottom: 10px;
+          font-size: 18px;
+          font-weight: 600;
+          box-sizing: border-box;
+  
+          .priority {
+            padding: 5px 10px;
+            text-wrap: nowrap;
           }
+  
+          .btn-info {
+            width: 10px;
+            height: 10px;
+            font-size: 13px;
+            padding: 3px;
+            cursor: pointer;
+            border-radius: 50%;
+            color: #FFFFFF !important;
+            background-color: #000000 !important;
+            border: 1px solid #FFFFFF;
+            margin-left: 10px;
+            margin-top: 5px;
+  
+            &:hover {
+              color: #000000 !important;
+              background-color: #FFFFFF !important;
+            }
+          }
+        }
+
+        .btn-info-container {
+          display: inline !important;
         }
       }
 
@@ -109,6 +149,10 @@
           color: #00fbff;
           font-weight: 600;
         }
+
+        .reference {
+          word-wrap: break-word;
+        }
       }
     }
 
@@ -118,12 +162,12 @@
 
 .timeline-context-dialog {
 
-  .content {
+  &-content {
     background-color: #003a4e;
     max-height: 100%;
     overflow: hidden;
     min-height: 80vh !important;
-    padding: 0;
+    padding: 0 !important;
 
     .content-container {
       overflow: hidden;
@@ -151,6 +195,11 @@
           background-color: #005774;
         }
       }
+
+      @media (max-width: 768px) {
+        grid-template-columns: 5% 90% 5%;
+        padding: 0;
+      }
     }
 
     .title {
@@ -164,6 +213,10 @@
     .content-body {
       overflow-y: auto;
       padding: 30px 2rem;
+
+      @media (max-width: 768px) {
+        padding: 30px 0;
+      }
     }
 
     .content-text {
